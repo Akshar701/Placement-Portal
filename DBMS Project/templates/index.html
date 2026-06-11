@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+    <h2>Campus Hiring Made Simple</h2>
+    <p>Students can apply, companies can hire, and placements stay organized.</p>
+    <div class="cta-row">
+        <a class="btn" href="{{ url_for('student_register') }}">Student Register</a>
+        <a class="btn alt" href="{{ url_for('company_register') }}">Company Register</a>
+    </div>
+</section>
+
+<section>
+    <h3>Latest Job Openings</h3>
+    {% if jobs %}
+        <div class="cards">
+            {% for job in jobs %}
+                <article class="card">
+                    <h4>{{ job.title }}</h4>
+                    <p><strong>Company:</strong> {{ job.company_name }}</p>
+                    <p><strong>Location:</strong> {{ job.location }}</p>
+                    <p><strong>CTC:</strong> {{ job.package_lpa }} LPA</p>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No job postings yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

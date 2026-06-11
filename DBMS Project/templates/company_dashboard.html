@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Company Dashboard</h2>
+
+<section>
+    <h3>Post New Job</h3>
+    <form method="post" action="{{ url_for('create_job') }}" class="form-grid">
+        <input type="text" name="title" placeholder="Job Title" required />
+        <input type="text" name="location" placeholder="Location" required />
+        <input type="number" step="0.01" name="package_lpa" placeholder="Package (LPA)" required />
+        <textarea name="description" placeholder="Job Description" rows="4" required></textarea>
+        <button type="submit" class="btn">Post Job</button>
+    </form>
+</section>
+
+<section>
+    <h3>My Job Posts</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Package</th>
+                <th>Posted On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.title }}</td>
+                <td>{{ job.location }}</td>
+                <td>{{ job.package_lpa }} LPA</td>
+                <td>{{ job.created_at }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">No jobs posted yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h3>Applicants</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>CGPA</th>
+                <th>Job</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in applicants %}
+            <tr>
+                <td>{{ a.student_name }}</td>
+                <td>{{ a.email }}</td>
+                <td>{{ a.department }}</td>
+                <td>{{ a.cgpa }}</td>
+                <td>{{ a.title }}</td>
+                <td>{{ a.status }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('update_application_status', application_id=a.id) }}">
+                        <select name="status">
+                            <option>Applied</option>
+                            <option>Shortlisted</option>
+                            <option>Rejected</option>
+                            <option>Selected</option>
+                        </select>
+                        <button class="btn">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">No applicants yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

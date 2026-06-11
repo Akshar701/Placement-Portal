@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Student Dashboard</h2>
+
+<section>
+    <h3>Available Jobs</h3>
+    {% if jobs %}
+    <div class="cards">
+        {% for job in jobs %}
+        <article class="card">
+            <h4>{{ job.title }}</h4>
+            <p><strong>Company:</strong> {{ job.company_name }}</p>
+            <p><strong>Location:</strong> {{ job.location }}</p>
+            <p><strong>CTC:</strong> {{ job.package_lpa }} LPA</p>
+            <form method="post" action="{{ url_for('apply_job', job_id=job.id) }}">
+                {% if job.already_applied %}
+                    <button class="btn" disabled>Already Applied</button>
+                {% else %}
+                    <button class="btn">Apply</button>
+                {% endif %}
+            </form>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No jobs available right now.</p>
+    {% endif %}
+</section>
+
+<section>
+    <h3>My Applications</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Applied At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.company_name }}</td>
+                <td>{{ app.title }}</td>
+                <td>{{ app.status }}</td>
+                <td>{{ app.applied_at }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">No applications yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

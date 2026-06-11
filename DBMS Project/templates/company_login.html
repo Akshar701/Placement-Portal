@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Company Login</h2>
+<form method="post" class="form-grid">
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <button type="submit" class="btn">Login</button>
+</form>
+<p>New company? <a href="{{ url_for('company_register') }}">Register</a></p>
+{% endblock %}
